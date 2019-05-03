@@ -12,6 +12,7 @@ const init = () => {
       <App
         gameTime={settings.gameTime}
         errorCount={settings.errorCount}
+        onWelcomeBtnClick={(evt) => evt.preventDefault()}
       />,
       document.querySelector(`.main`)
   );
