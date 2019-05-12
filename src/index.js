@@ -1,21 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/app/app.jsx";
+import questions, {settings} from './mocks/questions';
 
-const settings = {
-  gameTime: 7,
-  errorCount: 4,
-};
+const {gameTime, errorCount} = settings;
 
-const init = () => {
-  ReactDOM.render(
-      <App
-        gameTime={settings.gameTime}
-        errorCount={settings.errorCount}
-        onWelcomeBtnClick={(evt) => evt.preventDefault()}
-      />,
-      document.querySelector(`.main`)
-  );
-};
-
-init();
+ReactDOM.render(
+    <App
+      gameTime={gameTime}
+      errorCount={errorCount}
+      questions={questions}
+    />,
+    document.querySelector(`.main`)
+);
