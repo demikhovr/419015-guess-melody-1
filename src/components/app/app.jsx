@@ -27,16 +27,15 @@ class App extends PureComponent {
       errorCount,
       questions,
     } = props;
+    const currentQuestion = questions[question];
 
-    if (question === -1) {
+    if (question === -1 || !currentQuestion) {
       return <WelcomeScreen
         time={gameTime}
         errorCount={errorCount}
         onClick={onClick}
       />;
     }
-
-    const currentQuestion = questions[question];
 
     switch (currentQuestion.type) {
       case `genre`: return <section className="game game--genre">
