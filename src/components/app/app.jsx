@@ -68,9 +68,10 @@ class App extends PureComponent {
 
   _changeQuestion() {
     const {question} = this.state;
+    const {questions} = this.props;
 
     this.setState({
-      question: question + 1 >= question.length
+      question: question + 1 >= questions.length
         ? -1
         : question + 1,
     });
