@@ -37,13 +37,15 @@ class App extends PureComponent {
       />;
     }
 
+    const header = <Header
+      gameTime={gameTime}
+      errorCount={errorCount}
+      onClick={this._handleBackBtnClick}
+    />;
+
     switch (currentQuestion.type) {
       case `genre`: return <section className="game game--genre">
-        <Header
-          gameTime={gameTime}
-          errorCount={errorCount}
-          onClick={this._handleBackBtnClick}
-        />
+        {header}
         <GenreQuestionScreen
           question={currentQuestion}
           onAnswer={onClick}
@@ -51,11 +53,7 @@ class App extends PureComponent {
       </section>;
 
       case `artist`: return <section className="game game--artist">
-        <Header
-          gameTime={gameTime}
-          errorCount={errorCount}
-          onClick={this._handleBackBtnClick}
-        />
+        {header}
         <ArtistQuestionScreen
           question={currentQuestion}
           onAnswer={onClick}

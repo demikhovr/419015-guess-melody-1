@@ -7,12 +7,14 @@ const GenreQuestionScreen = ({question, onAnswer}) => {
     answers,
   } = question;
 
+  const formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    onAnswer();
+  };
+
   return <section className="game__screen">
     <h2 className="game__title">Выберите {genre} треки</h2>
-    <form className="game__tracks" onSubmit={(evt) => {
-      evt.preventDefault();
-      onAnswer();
-    }}>
+    <form className="game__tracks" onSubmit={formSubmitHandler}>
       {answers.map((it, i) => <div className="track" key={`answer-${it.genre}-${i}`}>
         <button className="track__button track__button--play" type="button" />
         <div className="track__status">
