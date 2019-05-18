@@ -11,6 +11,8 @@ class AudioPlayer extends PureComponent {
       isPlaying: props.isPlaying,
     };
 
+    this._audio = null;
+
     this._handlePlayBtnClick = this._handlePlayBtnClick.bind(this);
   }
 
@@ -54,9 +56,18 @@ class AudioPlayer extends PureComponent {
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const {isPlaying} = this.props;
-    return isPlaying ? this._audio.play() : this._audio.pause();
+
+    if (prevProps.isPlaying === this.props.isPlaying) {
+      return;
+    }
+
+    if (isPlaying) {
+      this._audio.play();
+    } else {
+      this._audio.pause();
+    }
   }
 
   componentWillUnmount() {
