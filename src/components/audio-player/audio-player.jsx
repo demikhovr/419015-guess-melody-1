@@ -11,9 +11,13 @@ class AudioPlayer extends PureComponent {
       isPlaying: props.isPlaying,
     };
 
-    this._audio = null;
+    this._audioRef = React.createRef();
 
     this._handlePlayBtnClick = this._handlePlayBtnClick.bind(this);
+    this._handleCanPlayThroughAudio = this._handleCanPlayThroughAudio.bind(this);
+    this._handlePlayAudio = this._handlePlayAudio.bind(this);
+    this._handlePauseAudio = this._handlePauseAudio.bind(this);
+    this._handleTimeUpdateAudio = this._handleTimeUpdateAudio.bind(this);
   }
 
   render() {
@@ -30,30 +34,19 @@ class AudioPlayer extends PureComponent {
         onClick={this._handlePlayBtnClick}
       />
       <div className="track__status">
-        <audio />
+        <audio ref={this._audioRef} />
       </div>
     </React.Fragment>;
   }
 
   componentDidMount() {
     const {src} = this.props;
-    this._audio = new Audio(src);
-
-    this._audio.oncanplaythrough = () => this.setState({
-      isLoading: false,
-    });
-
-    this._audio.onplay = () => this.setState({
-      isPlaying: true,
-    });
-
-    this._audio.onpause = () => this.setState({
-      isPlaying: false,
-    });
-
-    this._audio.ontimeupdate = () => this.setState({
-      progress: this._audio.currentTime,
-    });
+    const audio = this._audioRef.current;
+    audio.src = src;
+    audio.addEventListener(`canplaythrough`, this._handleCanPlayThroughAudio);
+    audio.addEventListener(`play`, this._handlePlayAudio);
+    audio.addEventListener(`pause`, this._handlePauseAudio);
+    audio.addEventListener(`timeupdate`, this._handleTimeUpdateAudio);
   }
 
   componentDidUpdate(prevProps) {
@@ -62,21 +55,22 @@ class AudioPlayer extends PureComponent {
     if (prevProps.isPlaying === this.props.isPlaying) {
       return;
     }
+    const audio = this._audioRef.current;
 
     if (isPlaying) {
-      this._audio.play();
+      audio.play();
     } else {
-      this._audio.pause();
+      audio.pause();
     }
   }
 
   componentWillUnmount() {
-    this._audio.oncanplaythrough = null;
-    this._audio.onplay = null;
-    this._audio.onpause = null;
-    this._audio.ontimeupdate = null;
-    this._audio.src = ``;
-    this._audio = null;
+    const audio = this._audioRef.current;
+    audio.removeEventListener(`canplaythrough`, this._handleCanPlayThroughAudio);
+    audio.removeEventListener(`play`, this._handlePlayAudio);
+    audio.removeEventListener(`pause`, this._handlePauseAudio);
+    audio.removeEventListener(`timeupdate`, this._handleTimeUpdateAudio);
+    audio.src = ``;
   }
 
   _handlePlayBtnClick() {
@@ -84,6 +78,32 @@ class AudioPlayer extends PureComponent {
     onPlayBtnClick();
     this.setState({
       isPlaying: !this.state.isPlaying,
+    });
+  }
+
+  _handleCanPlayThroughAudio() {
+    this.setState({
+      isLoading: false,
+    });
+  }
+
+  _handlePlayAudio() {
+    this.setState({
+      isPlaying: true,
+    });
+  }
+
+  _handlePauseAudio() {
+    this.setState({
+      isPlaying: false,
+    });
+  }
+
+  _handleTimeUpdateAudio() {
+    const audio = this._audioRef.current;
+
+    this.setState({
+      progress: audio.currentTime,
     });
   }
 }
