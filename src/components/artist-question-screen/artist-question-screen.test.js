@@ -33,7 +33,16 @@ it(`ArtistQuestionScreen correctly renders`, () => {
     .create(<ArtistQuestionScreen
       question={question}
       onAnswer={clickHandler}
-    />)
+    />, {
+      createNodeMock: () => {
+        return {
+          src: ``,
+          addEventListener: () => {},
+          play: () => {},
+          pause: () => {}
+        };
+      }
+    })
     .toJSON();
 
   expect(tree).toMatchSnapshot();

@@ -12,9 +12,6 @@ const mock = {
   isPlaying: false,
 };
 
-window.HTMLMediaElement.prototype.pause = () => {};
-window.HTMLMediaElement.prototype.play = () => {};
-
 it(`Click on play button change playing state`, () => {
   const {
     song,

@@ -20,7 +20,16 @@ it(`AudioPlayer correctly renders`, () => {
       src={song.src}
       isPlaying={isPlaying}
       onPlayBtnClick={clickHandler}
-    />)
+    />, {
+      createNodeMock: () => {
+        return {
+          src: ``,
+          addEventListener: () => {},
+          play: () => {},
+          pause: () => {}
+        };
+      }
+    })
     .toJSON();
 
   expect(tree).toMatchSnapshot();
