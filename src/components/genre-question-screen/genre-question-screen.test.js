@@ -35,7 +35,16 @@ it(`GenreQuestionScreen correctly renders`, () => {
     .create(<GenreQuestionScreen
       question={question}
       onAnswer={clickHandler}
-    />)
+    />, {
+      createNodeMock: () => {
+        return {
+          src: ``,
+          addEventListener: () => {},
+          play: () => {},
+          pause: () => {}
+        };
+      }
+    })
     .toJSON();
 
   expect(tree).toMatchSnapshot();

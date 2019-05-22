@@ -47,6 +47,7 @@ class App extends PureComponent {
       case `genre`: return <section className="game game--genre">
         {header}
         <GenreQuestionScreen
+          key={`genre-screen-${question}`}
           question={currentQuestion}
           onAnswer={onClick}
         />
@@ -55,6 +56,7 @@ class App extends PureComponent {
       case `artist`: return <section className="game game--artist">
         {header}
         <ArtistQuestionScreen
+          key={`artist-screen-${question}`}
           question={currentQuestion}
           onAnswer={onClick}
         />
