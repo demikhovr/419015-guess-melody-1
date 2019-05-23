@@ -1,7 +1,7 @@
 import {
   INCREMENT_STEP,
   INCREMENT_MISTAKES,
-} from './actionTypes';
+} from '../actions/action-types';
 
 const initialState = {
   step: -1,
