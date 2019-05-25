@@ -4,7 +4,7 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import App from './components/app/app.jsx';
 import questions, {settings} from './mocks/questions';
-import reducer from './store/reducer';
+import reducer from './store/reducers/reducer';
 
 const store = createStore(reducer);
 
@@ -14,7 +14,7 @@ ReactDOM.render(
     <Provider store={store}>
       <App
         gameTime={gameTime}
-        errorCount={errorCount}
+        maxMistakes={errorCount}
         questions={questions}
       />
     </Provider>,

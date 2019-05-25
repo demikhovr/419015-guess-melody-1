@@ -16,7 +16,7 @@ exports[`App correctly renders 1`] = `
   </div>
   <button
     className="welcome__button"
-    onClick={[Function]}
+    onClick={[MockFunction]}
   >
     <span
       className="visually-hidden"
@@ -44,7 +44,7 @@ exports[`App correctly renders 1`] = `
     </li>
     <li>
       Можно допустить 
-      0
+      3
        ошибки.
     </li>
   </ul>
