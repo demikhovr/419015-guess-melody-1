@@ -7,7 +7,7 @@ it(`Header correctly renders`, () => {
   const tree = renderer
     .create(<Header
       gameTime={7}
-      errorCount={4}
+      mistakes={4}
       onClick={clickHandler}
     />)
     .toJSON();
