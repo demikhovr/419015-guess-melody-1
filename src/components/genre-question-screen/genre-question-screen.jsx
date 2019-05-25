@@ -6,8 +6,12 @@ class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
 
+    const {question} = this.props;
+    const {answers} = question;
+
     this.state = {
       activePlayer: null,
+      userAnswer: new Array(answers.length).fill(false),
     };
 
     this._handleFormSubmit = this._handleFormSubmit.bind(this);
@@ -38,6 +42,7 @@ class GenreQuestionScreen extends PureComponent {
               name="answer"
               value={`answer-${i}`}
               id={`answer-${i}`}
+              onChange={this._handleAnswerChange.bind(this, i)}
             />
             <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
           </div>
@@ -48,16 +53,23 @@ class GenreQuestionScreen extends PureComponent {
     </section>;
   }
 
-  _handleFormSubmit(evt) {
-    evt.preventDefault();
-    const {onAnswer} = this.props;
-    onAnswer();
-  }
-
   _handlePlayBtnClick(index) {
     this.setState({
       activePlayer: this.state.activePlayer === index ? -1 : index,
     });
+  }
+
+  _handleAnswerChange(i) {
+    const userAnswer = [...this.state.userAnswer];
+    userAnswer[i] = !userAnswer[i];
+    this.setState({userAnswer});
+  }
+
+  _handleFormSubmit(evt) {
+    evt.preventDefault();
+    const {userAnswer} = this.state;
+    const {onAnswer} = this.props;
+    onAnswer(userAnswer);
   }
 }
 
