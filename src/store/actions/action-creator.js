@@ -1,6 +1,7 @@
 import {
   INCREMENT_STEP,
   INCREMENT_MISTAKES,
+  RESET,
 } from './action-types';
 
 export const isArtistAnswerCorrect = (userAnswer, question) => userAnswer.artist === question.song.artist;
@@ -14,7 +15,7 @@ export default {
       payload: 1,
     };
   },
-  incrementMistake(userAnswer, question) {
+  incrementMistake(userAnswer, question, mistakes, maxMistakes) {
     let answerIsCorrect = false;
 
     switch (question.type) {
@@ -26,9 +27,20 @@ export default {
         break;
     }
 
+    if (!answerIsCorrect && mistakes + 1 >= maxMistakes) {
+      return {
+        type: RESET,
+      };
+    }
+
     return {
       type: INCREMENT_MISTAKES,
       payload: answerIsCorrect ? 0 : 1,
+    };
+  },
+  reset() {
+    return {
+      type: RESET,
     };
   }
 };

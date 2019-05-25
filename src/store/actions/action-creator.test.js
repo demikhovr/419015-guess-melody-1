@@ -5,6 +5,7 @@ import ActionCreator, {
 import {
   INCREMENT_STEP,
   INCREMENT_MISTAKES,
+  RESET,
 } from './action-types';
 
 describe(`Business logic is correct`, () => {
@@ -114,12 +115,20 @@ describe(`Action creators works correctly`, () => {
       ],
     };
 
+    const mistakes = 0;
+    const maxMistakes = 20;
+
     const expected = {
       type: INCREMENT_MISTAKES,
       payload: 0,
     };
 
-    expect(ActionCreator.incrementMistake(userAnswer, question)).toEqual(expected);
+    expect(ActionCreator.incrementMistake(
+        userAnswer,
+        question,
+        mistakes,
+        maxMistakes
+    )).toEqual(expected);
   });
 
   it(`Action creator for incrementing mistake returns action with 1 payload if answer for artist is incorrect`, () => {
@@ -150,12 +159,20 @@ describe(`Action creators works correctly`, () => {
       ],
     };
 
+    const mistakes = 0;
+    const maxMistakes = 20;
+
     const expected = {
       type: INCREMENT_MISTAKES,
       payload: 1,
     };
 
-    expect(ActionCreator.incrementMistake(userAnswer, question)).toEqual(expected);
+    expect(ActionCreator.incrementMistake(
+        userAnswer,
+        question,
+        mistakes,
+        maxMistakes
+    )).toEqual(expected);
   });
 
   it(`Action creator for incrementing mistake returns action with 0 payload if answer for genre is correct`, () => {
@@ -183,12 +200,20 @@ describe(`Action creators works correctly`, () => {
       ],
     };
 
+    const mistakes = 0;
+    const maxMistakes = 20;
+
     const expected = {
       type: INCREMENT_MISTAKES,
       payload: 0,
     };
 
-    expect(ActionCreator.incrementMistake(userAnswer, question)).toEqual(expected);
+    expect(ActionCreator.incrementMistake(
+        userAnswer,
+        question,
+        mistakes,
+        maxMistakes
+    )).toEqual(expected);
   });
 
   it(`Action creator for incrementing mistake returns action with 1 payload if answer for genre is incorrect`, () => {
@@ -216,10 +241,94 @@ describe(`Action creators works correctly`, () => {
       ],
     };
 
+    const mistakes = 0;
+    const maxMistakes = 20;
+
     const expected = {
       type: INCREMENT_MISTAKES,
       payload: 1,
     };
-    expect(ActionCreator.incrementMistake(userAnswer, question)).toEqual(expected);
+
+    expect(ActionCreator.incrementMistake(
+        userAnswer,
+        question,
+        mistakes,
+        maxMistakes
+    )).toEqual(expected);
+  });
+
+  it(`Action creator resets state if user is answered incorrectly and there're no mistakes left`, () => {
+    const incorrectArtistUserAnswer = {
+      artist: `incorrect-artist`,
+      picture: ``,
+    };
+
+    const incorrectGenreUserAnswer = [true, true, true, true];
+
+    const artistQuestion = {
+      type: `artist`,
+      song: {
+        artist: `correct-artist`,
+        src: ``,
+      },
+      answers: [
+        {
+          picture: `incorrect-pic`,
+          artist: `incorrect-artist`,
+        },
+        {
+          picture: `incorrect-pic`,
+          artist: `incorrect-artist`,
+        },
+        {
+          picture: `correct`,
+          artist: `correct-artist`,
+        },
+      ],
+    };
+
+    const genreQuestion = {
+      type: `genre`,
+      genre: `correct-genre`,
+      answers: [
+        {
+          src: ``,
+          genre: `incorrect-genre`,
+        },
+        {
+          src: ``,
+          genre: `correct-genre`,
+        },
+        {
+          src: ``,
+          genre: `correct-genre`,
+        },
+        {
+          src: ``,
+          genre: `incorrect-genre`,
+        },
+      ],
+    };
+
+    const mistakes = Infinity;
+    const maxMistakes = 0;
+
+    const expected = {
+      type: RESET,
+    };
+
+    expect(ActionCreator.incrementMistake(
+        incorrectArtistUserAnswer,
+        artistQuestion,
+        mistakes,
+        maxMistakes
+    )).toEqual(expected);
+
+    expect(ActionCreator.incrementMistake(
+        incorrectGenreUserAnswer,
+        genreQuestion,
+        mistakes,
+        maxMistakes
+    )).toEqual(expected);
   });
 });

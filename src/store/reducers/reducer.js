@@ -1,6 +1,7 @@
 import {
   INCREMENT_STEP,
   INCREMENT_MISTAKES,
+  RESET,
 } from '../actions/action-types';
 
 const initialState = {
@@ -19,6 +20,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         mistakes: state.mistakes + action.payload,
+      };
+    case RESET:
+      return {
+        ...initialState,
       };
     default:
       return state;

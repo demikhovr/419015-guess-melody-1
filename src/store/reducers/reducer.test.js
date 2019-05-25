@@ -2,6 +2,7 @@ import reducer from './reducer';
 import {
   INCREMENT_STEP,
   INCREMENT_MISTAKES,
+  RESET,
 } from '../actions/action-types';
 
 it(`Reducer without additional parameters should return initial state`, () => {
@@ -63,4 +64,22 @@ it(`Reducer should increment number of mistakes by a given value`, () => {
   };
 
   expect(reducer(state, secondAction)).toEqual(secondExpected);
+});
+
+it(`Reducer should correctly reset application state`, () => {
+  const state = {
+    step: 9999,
+    mistakes: 1337,
+  };
+
+  const action = {
+    type: RESET,
+  };
+
+  const initialState = {
+    step: -1,
+    mistakes: 0,
+  };
+
+  expect(reducer(state, action)).toEqual(initialState);
 });
