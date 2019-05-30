@@ -9,7 +9,7 @@ it(`Click on '.game__back' button correctly works`, () => {
   const clickHandler = jest.fn();
   const header = shallow(<Header
     gameTime={7}
-    errorCount={4}
+    mistakes={4}
     onClick={clickHandler}
   />);
 

@@ -37,8 +37,8 @@ it(`When user answers artist question change event is fired`, () => {
     onAnswer={onAnswer}
   />);
 
-  const form = artistQuestion.find(`form`);
-  form.simulate(`change`);
+  const input = artistQuestion.find(`#answer-0`);
+  input.simulate(`click`);
 
   expect(onAnswer).toHaveBeenCalledTimes(1);
 });

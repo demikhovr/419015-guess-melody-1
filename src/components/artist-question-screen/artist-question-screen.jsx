@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import AudioPlayer from '../audio-player/audio-player.jsx';
+import ArtistAnswer from '../artist-answer/artist-answer.jsx';
 
 class ArtistQuestionScreen extends PureComponent {
   constructor(props) {
@@ -33,20 +34,13 @@ class ArtistQuestionScreen extends PureComponent {
           onPlayBtnClick={this._handlePlayBtnClick}
         />
       </div>
-      <form className="game__artist" onChange={onAnswer}>
-        {answers.map((it, i) => <div className="artist" key={`answer-${it.artist}-${i}`}>
-          <input
-            className="artist__input visually-hidden"
-            type="radio"
-            name="answer"
-            value={`answer-${i}`}
-            id={`answer-${i}`}
-          />
-          <label className="artist__name" htmlFor={`answer-${i}`}>
-            <img className="artist__picture" src={it.picture} alt={it.artist} />
-            {it.artist}
-          </label>
-        </div>)}
+      <form className="game__artist">
+        {answers.map((it, i) => <ArtistAnswer
+          key={`answer-${it.artist}`}
+          id={i}
+          {...it}
+          onAnswer={onAnswer}
+        />)}
       </form>
     </section>;
   }

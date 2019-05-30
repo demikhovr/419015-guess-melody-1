@@ -1,17 +1,22 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import AudioPlayer from '../audio-player/audio-player.jsx';
+import GenreAnswer from '../genre-answer/genre-answer.jsx';
 
 class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
 
+    const {question} = this.props;
+    const {answers} = question;
+
     this.state = {
-      activePlayer: null,
+      activePlayer: -1,
+      userAnswers: new Array(answers.length).fill(false),
     };
 
     this._handleFormSubmit = this._handleFormSubmit.bind(this);
     this._handlePlayBtnClick = this._handlePlayBtnClick.bind(this);
+    this._handleAnswerChange = this._handleAnswerChange.bind(this);
   }
 
   render() {
@@ -25,39 +30,36 @@ class GenreQuestionScreen extends PureComponent {
     return <section className="game__screen">
       <h2 className="game__title">Выберите {genre} треки</h2>
       <form className="game__tracks" onSubmit={this._handleFormSubmit}>
-        {answers.map((it, i) => <div className="track" key={`answer-${it.genre}-${i}`}>
-          <AudioPlayer
-            src={it.src}
-            isPlaying={activePlayer === i}
-            onPlayBtnClick={this._handlePlayBtnClick.bind(this, i)}
-          />
-          <div className="game__answer">
-            <input
-              className="game__input visually-hidden"
-              type="checkbox"
-              name="answer"
-              value={`answer-${i}`}
-              id={`answer-${i}`}
-            />
-            <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
-          </div>
-        </div>)}
-
+        {answers.map((it, i) => <GenreAnswer
+          key={`answer-${it.genre}-${i}`}
+          id={i}
+          src={it.src}
+          activePlayer={activePlayer}
+          onChange={this._handleAnswerChange}
+          onPlayBtnClick={this._handlePlayBtnClick}
+        />)}
         <button className="game__submit button" type="submit">Ответить</button>
       </form>
     </section>;
-  }
-
-  _handleFormSubmit(evt) {
-    evt.preventDefault();
-    const {onAnswer} = this.props;
-    onAnswer();
   }
 
   _handlePlayBtnClick(index) {
     this.setState({
       activePlayer: this.state.activePlayer === index ? -1 : index,
     });
+  }
+
+  _handleAnswerChange(i) {
+    const userAnswers = [...this.state.userAnswers];
+    userAnswers[i] = !userAnswers[i];
+    this.setState({userAnswers});
+  }
+
+  _handleFormSubmit(evt) {
+    evt.preventDefault();
+    const {userAnswers} = this.state;
+    const {onAnswer} = this.props;
+    onAnswer(userAnswers);
   }
 }
 
