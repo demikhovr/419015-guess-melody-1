@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import AudioPlayer from '../audio-player/audio-player.jsx';
+import ArtistAnswer from '../artist-answer/artist-answer.jsx';
 
 class ArtistQuestionScreen extends PureComponent {
   constructor(props) {
@@ -15,7 +16,10 @@ class ArtistQuestionScreen extends PureComponent {
 
   render() {
     const {isPlaying} = this.state;
-    const {question} = this.props;
+    const {
+      question,
+      onAnswer,
+    } = this.props;
     const {
       song,
       answers,
@@ -31,20 +35,12 @@ class ArtistQuestionScreen extends PureComponent {
         />
       </div>
       <form className="game__artist">
-        {answers.map((it, i) => <div className="artist" key={`answer-${it.artist}-${i}`}>
-          <input
-            className="artist__input visually-hidden"
-            type="radio"
-            name="answer"
-            value={`answer-${i}`}
-            id={`answer-${i}`}
-            onClick={this._handleAnswerClick.bind(this, it)}
-          />
-          <label className="artist__name" htmlFor={`answer-${i}`}>
-            <img className="artist__picture" src={it.picture} alt={it.artist} />
-            {it.artist}
-          </label>
-        </div>)}
+        {answers.map((it, i) => <ArtistAnswer
+          key={`answer-${it.artist}`}
+          id={i}
+          {...it}
+          onAnswer={onAnswer}
+        />)}
       </form>
     </section>;
   }
@@ -53,11 +49,6 @@ class ArtistQuestionScreen extends PureComponent {
     this.setState({
       isPlaying: !this.state.isPlaying,
     });
-  }
-
-  _handleAnswerClick(it) {
-    const {onAnswer} = this.props;
-    onAnswer(it);
   }
 }
 
