@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ArtistInput correctly renders 1`] = `
+exports[`ArtistAnswer correctly renders 1`] = `
 <div
   className="artist"
 >
