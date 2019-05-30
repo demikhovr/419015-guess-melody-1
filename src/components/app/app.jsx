@@ -95,7 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
   onWelcomeScreenClick: () => dispatch(ActionCreator.incrementStep()),
   onUserAnswer: (userAnswer, question, mistakes, maxMistakes) => {
     dispatch(ActionCreator.incrementStep());
-    dispatch(ActionCreator.incrementMistake(
+    dispatch(ActionCreator.updateMistakes(
         userAnswer,
         question,
         mistakes,

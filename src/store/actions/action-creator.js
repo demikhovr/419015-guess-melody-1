@@ -4,7 +4,7 @@ import {
   RESET,
 } from './action-types';
 
-export const isArtistAnswerCorrect = (userAnswer, question) => userAnswer.artist === question.song.artist;
+export const isArtistAnswerCorrect = (userAnswer, question) => userAnswer === question.song.artist;
 export const isGenreAnswerCorrect = (userAnswer, question) => userAnswer
   .every((it, i) => it === (question.answers[i].genre === question.genre));
 
@@ -15,7 +15,7 @@ export default {
       payload: 1,
     };
   },
-  incrementMistake(userAnswer, question, mistakes, maxMistakes) {
+  updateMistakes(userAnswer, question, mistakes, maxMistakes) {
     let answerIsCorrect = false;
 
     switch (question.type) {

@@ -10,11 +10,7 @@ import {
 
 describe(`Business logic is correct`, () => {
   it(`Artist answer is checked correctly`, () => {
-    const correctUserAnswer = {
-      artist: `correct-artist`,
-      picture: `correct-pic`,
-    };
-
+    const correctUserAnswer = `correct-artist`;
     const incorrectUserAnswer = {
       artist: `incorrect-artist`,
       picture: `incorrect-pic`,
@@ -88,11 +84,7 @@ describe(`Action creators works correctly`, () => {
   });
 
   it(`Action creator for incrementing mistake returns action with 0 payload if answer for artist is correct`, () => {
-    const userAnswer = {
-      artist: `correct-artist`,
-      picture: `correct-pic`,
-    };
-
+    const userAnswer = `correct-artist`;
     const question = {
       type: `artist`,
       song: {
@@ -123,7 +115,7 @@ describe(`Action creators works correctly`, () => {
       payload: 0,
     };
 
-    expect(ActionCreator.incrementMistake(
+    expect(ActionCreator.updateMistakes(
         userAnswer,
         question,
         mistakes,
@@ -167,7 +159,7 @@ describe(`Action creators works correctly`, () => {
       payload: 1,
     };
 
-    expect(ActionCreator.incrementMistake(
+    expect(ActionCreator.updateMistakes(
         userAnswer,
         question,
         mistakes,
@@ -208,7 +200,7 @@ describe(`Action creators works correctly`, () => {
       payload: 0,
     };
 
-    expect(ActionCreator.incrementMistake(
+    expect(ActionCreator.updateMistakes(
         userAnswer,
         question,
         mistakes,
@@ -249,7 +241,7 @@ describe(`Action creators works correctly`, () => {
       payload: 1,
     };
 
-    expect(ActionCreator.incrementMistake(
+    expect(ActionCreator.updateMistakes(
         userAnswer,
         question,
         mistakes,
@@ -317,14 +309,14 @@ describe(`Action creators works correctly`, () => {
       type: RESET,
     };
 
-    expect(ActionCreator.incrementMistake(
+    expect(ActionCreator.updateMistakes(
         incorrectArtistUserAnswer,
         artistQuestion,
         mistakes,
         maxMistakes
     )).toEqual(expected);
 
-    expect(ActionCreator.incrementMistake(
+    expect(ActionCreator.updateMistakes(
         incorrectGenreUserAnswer,
         genreQuestion,
         mistakes,
